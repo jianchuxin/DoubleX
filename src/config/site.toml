@@ -18,7 +18,7 @@ lang = "zh-CN"
 # 英文与代码感 UI 字体
 en = "Maple Mono"
 code = "Monaco"
-# 模板内可直接选择：ChillRoundM、LXGW WenKai
+# 中文阅读字体（更换其它 TTF 字体时同步修改 zh 与 file）
 zh = "ChillRoundM"
 file = "/fonts/ChillRoundM.ttf"
 
