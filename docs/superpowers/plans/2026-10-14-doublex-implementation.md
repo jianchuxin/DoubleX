@@ -467,8 +467,7 @@ const resolvedSite = withTrailingSlash(
 );
 
 const resolvedBase = withTrailingSlash(
-  customBase ||
-    (isGitHubActions && isProjectPage && repositoryName ? `/${repositoryName}` : '/'),
+  customBase || (isGitHubActions && isProjectPage && repositoryName ? `/${repositoryName}` : '/'),
 );
 ```
 
@@ -477,7 +476,7 @@ const resolvedBase = withTrailingSlash(
 在 `const posts = ...` 之后新增：
 
 ```js
-  const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ```
 
 条目里的链接改为：

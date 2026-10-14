@@ -58,16 +58,16 @@ DoubleX 是一个前端开发者的个人网站：作品集为主，博客为辅
 
 ## 3. 信息架构
 
-| 路由 | 内容 |
-| --- | --- |
-| `/` | 首页仪表盘 |
-| `/projects/` | 项目索引（卡片网格） |
-| `/projects/<id>/` | 项目详情 |
-| `/blog/` | 博客列表（分页） |
-| `/blog/<id>/` | 文章页（封面、TOC、系列、标签） |
-| `/blog/archives/`、`/blog/categories/`、`/blog/tags/`、`/blog/series/` | 归档类页面 |
-| `/about/` | 关于 |
-| `/rss.xml`、`/sitemap-index.xml`、`/404.html` | 订阅与辅助页面 |
+| 路由                                                                   | 内容                            |
+| ---------------------------------------------------------------------- | ------------------------------- |
+| `/`                                                                    | 首页仪表盘                      |
+| `/projects/`                                                           | 项目索引（卡片网格）            |
+| `/projects/<id>/`                                                      | 项目详情                        |
+| `/blog/`                                                               | 博客列表（分页）                |
+| `/blog/<id>/`                                                          | 文章页（封面、TOC、系列、标签） |
+| `/blog/archives/`、`/blog/categories/`、`/blog/tags/`、`/blog/series/` | 归档类页面                      |
+| `/about/`                                                              | 关于                            |
+| `/rss.xml`、`/sitemap-index.xml`、`/404.html`                          | 订阅与辅助页面                  |
 
 顶部导航：首页 / 博客 / 项目 / 关于（Vibe、Media 不启用）。
 搜索快捷键：Cmd/Ctrl+K。
