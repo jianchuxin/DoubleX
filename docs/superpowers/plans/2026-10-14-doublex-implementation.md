@@ -588,7 +588,7 @@ git commit -m "fix: harden base path handling for GitHub Pages project page"
 - Modify: `src/config/site.toml`（整体重写）
 - Modify: `docs/superpowers/specs/2026-10-14-doublex-design.md`（两处对齐）
 
-- [ ] Step 1: 创建占位头像 `public/images/avatar.svg`
+- [x] Step 1: 创建占位头像 `public/images/avatar.svg`
 
 ```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 176" role="img" aria-label="DoubleX">
@@ -597,7 +597,7 @@ git commit -m "fix: harden base path handling for GitHub Pages project page"
 </svg>
 ```
 
-- [ ] Step 2: 替换 `public/favicon.svg`
+- [x] Step 2: 替换 `public/favicon.svg`
 
 ```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="DoubleX">
@@ -606,7 +606,7 @@ git commit -m "fix: harden base path handling for GitHub Pages project page"
 </svg>
 ```
 
-- [ ] Step 3: `navfolio.config.ts` 改为只启用 projects 模块
+- [x] Step 3: `navfolio.config.ts` 改为只启用 projects 模块
 
 ```ts
 import { pages, projectsModule } from '@navfolio/pages';
@@ -631,7 +631,7 @@ export default defineNavfolioConfig({
 });
 ```
 
-- [ ] Step 4: 用以下内容整体替换 `src/config/site.toml`
+- [x] Step 4: 用以下内容整体替换 `src/config/site.toml`
 
 ```toml
 [config.site]
@@ -818,14 +818,14 @@ text = "学习 Astro 与静态站点工程"
 mark = "03"
 ```
 
-- [ ] Step 5: 更新 spec 两处（对齐实现范围）
+- [x] Step 5: 更新 spec 两处（对齐实现范围）
 
 `docs/superpowers/specs/2026-10-14-doublex-design.md`：
 
 - `2 个示例项目（含封面、标签、外链）` → `2 个示例项目（标签、外链；封面随真实项目补充）`
 - `品牌替换为 DoubleX：站点标题、描述、favicon 组、OG 图、页脚署名` → `品牌替换为 DoubleX：站点标题、描述、favicon.svg、页脚署名（PNG 图标组与 OG 图为后续事项）`
 
-- [ ] Step 6: 构建 + 检查 + 抽查页面内容
+- [x] Step 6: 构建 + 检查 + 抽查页面内容
 
 ```bash
 export GITHUB_ACTIONS=true GITHUB_REPOSITORY=jianchuxin/DoubleX GITHUB_REPOSITORY_OWNER=jianchuxin
@@ -836,7 +836,7 @@ rg -o "简楚欣|DoubleX|/DoubleX/images/avatar.svg" dist/index.html | sort | un
 
 Expected: check:base 通过；`简楚欣`、`DoubleX`、`/DoubleX/images/avatar.svg` 各至少一次。
 
-- [ ] Step 7: 提交
+- [x] Step 7: 提交
 
 ```bash
 git add -A
@@ -854,7 +854,7 @@ git commit -m "chore: brand the site as DoubleX with placeholder profile"
 - Modify: `src/pages/index.astro`
 - Modify: `src/content.config.ts`
 
-- [ ] Step 1: 创建 `src/components/cards/FeaturedProjectsCard.astro`（完整内容）
+- [x] Step 1: 创建 `src/components/cards/FeaturedProjectsCard.astro`（完整内容）
 
 ```astro
 ---
@@ -971,7 +971,7 @@ const featured = enabled
 </style>
 ```
 
-- [ ] Step 2: `src/components/layout/DashboardFlow.astro` 主列加入插槽
+- [x] Step 2: `src/components/layout/DashboardFlow.astro` 主列加入插槽
 
 ```diff
      <section class="flow-column main-column">
@@ -981,7 +981,7 @@ const featured = enabled
      </section>
 ```
 
-- [ ] Step 3: `src/pages/index.astro` 填充插槽（完整新内容）
+- [x] Step 3: `src/pages/index.astro` 填充插槽（完整新内容）
 
 ```astro
 ---
@@ -1040,7 +1040,7 @@ const { home, profile, site } = await getSiteConfig();
 </BaseLayout>
 ```
 
-- [ ] Step 4: `src/content.config.ts` 的 home schema 增加 `featured`
+- [x] Step 4: `src/content.config.ts` 的 home schema 增加 `featured`
 
 在 `latest` 字段块之后、`navigation` 之前插入：
 
@@ -1054,7 +1054,7 @@ const { home, profile, site } = await getSiteConfig();
         .default({ enabled: true, count: 2 }),
 ```
 
-- [ ] Step 5: 构建 + 验证
+- [x] Step 5: 构建 + 验证
 
 ```bash
 export GITHUB_ACTIONS=true GITHUB_REPOSITORY=jianchuxin/DoubleX GITHUB_REPOSITORY_OWNER=jianchuxin
@@ -1066,7 +1066,7 @@ bun run check:base
 
 Expected: `精选项目` 至少出现 1 次；两个项目标题都出现；check:base 通过。
 
-- [ ] Step 6: 提交
+- [x] Step 6: 提交
 
 ```bash
 git add -A
@@ -1082,7 +1082,7 @@ git commit -m "feat: add featured projects section to homepage"
 - Modify: `.github/workflows/deploy-pages.yml`（整文件重写）
 - Create: `.github/workflows/ci.yml`
 
-- [ ] Step 1: 重写 `.github/workflows/deploy-pages.yml`
+- [x] Step 1: 重写 `.github/workflows/deploy-pages.yml`
 
 ```yaml
 name: Deploy to GitHub Pages
@@ -1147,7 +1147,7 @@ jobs:
         uses: actions/deploy-pages@v4
 ```
 
-- [ ] Step 2: 创建 `.github/workflows/ci.yml`
+- [x] Step 2: 创建 `.github/workflows/ci.yml`
 
 ```yaml
 name: CI
@@ -1187,7 +1187,7 @@ jobs:
         run: bun run check:base
 ```
 
-- [ ] Step 3: 提交
+- [x] Step 3: 提交
 
 ```bash
 git add .github
@@ -1202,7 +1202,7 @@ git commit -m "ci: build and deploy via Bun with base path checks"
 
 - Modify: `README.md`
 
-- [ ] Step 1: 用以下内容整体替换 `README.md`
+- [x] Step 1: 用以下内容整体替换 `README.md`
 
 ````markdown
 # DoubleX
@@ -1249,7 +1249,7 @@ export https_proxy=http://127.0.0.1:7897 http_proxy=http://127.0.0.1:7897
 PR 与非 main 分支由 `.github/workflows/ci.yml` 做构建校验。
 ````
 
-- [ ] Step 2: 提交
+- [x] Step 2: 提交
 
 ```bash
 git add README.md
@@ -1262,13 +1262,13 @@ git commit -m "docs: rewrite README for DoubleX"
 
 **Files:** 无代码改动（GitHub 操作）
 
-- [ ] Step 1: 推送分支
+- [x] Step 1: 推送分支
 
 ```bash
 git push -u origin feat/navfolio-base
 ```
 
-- [ ] Step 2: 创建 PR（GitHub API，令牌取自 macOS keychain）
+- [x] Step 2: 创建 PR（GitHub API，令牌取自 macOS keychain）
 
 ```bash
 TOKEN=$(security find-internet-password -s github.com -w)
@@ -1277,14 +1277,14 @@ curl -s -X POST -H "Authorization: token $TOKEN" -H "Accept: application/vnd.git
   -d '{"title":"feat: adopt navfolio v1 as DoubleX base","head":"feat/navfolio-base","base":"main","body":"引入 navfolio v1 底座：品牌、占位内容、子路径修复（含依赖补丁）、CI/CD。详见 docs/superpowers/specs 与 plans。"}'
 ```
 
-- [ ] Step 3: 轮询 CI 直至完成（期望成功；失败则修复后追加提交再推）
+- [x] Step 3: 轮询 CI 直至完成（期望成功；失败则修复后追加提交再推）
 
 ```bash
 curl -s -H "Authorization: token $TOKEN" \
   "https://api.github.com/repos/jianchuxin/DoubleX/actions/runs?branch=feat%2Fnavfolio-base&per_page=5"
 ```
 
-- [ ] Step 4: 合并 PR（merge commit）
+- [x] Step 4: 合并 PR（merge commit）
 
 ```bash
 PR_NUMBER=<上一步返回的编号>
@@ -1293,9 +1293,9 @@ curl -s -X PUT -H "Authorization: token $TOKEN" -H "Accept: application/vnd.gith
   -d '{"merge_method":"merge"}'
 ```
 
-- [ ] Step 5: 等待 main 的 `Deploy to GitHub Pages` 成功
+- [x] Step 5: 等待 main 的 `Deploy to GitHub Pages` 成功
 
-- [ ] Step 6: 线上验证
+- [x] Step 6: 线上验证
 
 ```bash
 curl -s -o /tmp/doublex-live.html -w "%{http_code}\n" https://jianchuxin.github.io/DoubleX/
@@ -1308,7 +1308,7 @@ done
 
 Expected: 首页 200 且包含关键词；五个路径全部 200。
 
-- [ ] Step 7: 更新 spec 状态并收尾
+- [x] Step 7: 更新 spec 状态并收尾
 
 把 `docs/superpowers/specs/2026-10-14-doublex-design.md` 顶部状态行改为
 `状态：已实现并上线（2026-10-14）`，提交并推送：
@@ -1323,8 +1323,24 @@ git push origin main
 
 ## 验收清单（对应 spec 第 10 节）
 
-- [ ] 本地 `bun run build` 通过、`bun run dev` 可用
-- [ ] `bun run check:base` 0 泄漏
-- [ ] PR CI 绿；合并 main 后部署成功
-- [ ] 线上：首页 / 项目 / 博客 / 关于 / 搜索（Cmd+K）/ RSS / sitemap / 404 可用
-- [ ] 浅深色切换与 8 套配色可用
+- [x] 本地 `bun run build` 通过、`bun run dev` 可用
+- [x] `bun run check:base` 0 泄漏
+- [x] PR CI 绿；合并 main 后部署成功
+- [x] 线上：首页 / 项目 / 博客 / 关于 / 搜索（Cmd+K）/ RSS / sitemap / 404 可用
+- [x] 浅深色切换与 8 套配色可用
+
+## 执行备注（2026-10-15 完成）
+
+- 提交顺序调整：主题的 pre-commit 钩子会执行 `bun run format:check` 与完整构建，内容未就位时
+  构建必然失败；因此 `.nvmrc` 提交挪到内容创建之后，并新增了一次 docs 格式化提交。
+- Task 4 范围扩展：除计划内修复外，增加了 `public/browserconfig.xml`、`public/manifest.json`
+  的相对路径化，删除未引用的 `public/site.webmanifest`，以及 `GITHUB_REPOSITORY_OWNER`
+  缺失时从 `GITHUB_REPOSITORY` 推导 owner 的兜底（由独立验证反馈驱动）。
+- 独立验证：Task 4 完成后由子代理做只读复查；第一轮发现「无环境变量构建会退化为根路径」的
+  陷阱与上述缺口，修复后第二轮通过（641 个根相对链接、159 个绝对链接、CSS `url()` 全部带前缀）。
+- 资产瘦身：移除 24MB 未使用的 LXGW WenKai 字体、主题演示图与演示音频，`dist` 47MB → 16MB。
+- 部署：合并后首次 Pages 部署在 `updating_pages` 状态超时（GitHub 后端问题），
+  `re-run failed jobs` 后成功；线上 https://jianchuxin.github.io/DoubleX/ 全部验证通过。
+- 注意：pre-commit 钩子提交时会用默认（根路径）配置重建 `dist`；本地验证 `/DoubleX/` 前缀
+  必须带环境变量重建（`GITHUB_ACTIONS=true GITHUB_REPOSITORY=jianchuxin/DoubleX bun run build`）
+  后再跑 `bun run check:base`。

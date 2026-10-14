@@ -1,7 +1,7 @@
 # DoubleX 个人网站设计
 
 - 日期：2026-10-14
-- 状态：设计已确认（首页包含「精选项目」区块），待实现
+- 状态：已实现并上线（2026-10-15，实施计划 Task 9 验证通过）
 - 站点地址：https://jianchuxin.github.io/DoubleX/
 - 仓库：https://github.com/jianchuxin/DoubleX
 
