@@ -109,19 +109,22 @@ DoubleX 是一个前端开发者的个人网站：作品集为主，博客为辅
 
 - 沿用 navfolio 设计语言：圆体中文字 + 等宽英文、浅深色切换、悬浮胶囊导航、卡片式仪表盘
 - 8 套配色可选，默认 green-soft
-- 品牌替换为 DoubleX：站点标题、描述、favicon 组、OG 图、页脚署名
+- 品牌替换为 DoubleX：站点标题、描述、favicon.svg、页脚署名（PNG 图标组与 OG 图为后续事项）
 - 代码高亮、数学公式、图片灯箱等能力保持主题默认
 
 ## 7. 子路径适配（/DoubleX/）
 
-GitHub Pages 项目页从子路径提供服务。主题自带的 base 处理存在 6 类路径遗漏
-（对应 5 处代码修改与 1 个依赖补丁），已实测修复方案（实现时原样落地）：
+GitHub Pages 项目页从子路径提供服务。主题自带的 base 处理存在多处路径遗漏，已实测并修复
+（实现时原样落地，对应 6 处代码修改、2 个静态元数据文件调整与 1 个依赖补丁）：
 
-1. `astro.config.mjs`：`site` 与 `base` 输出补尾斜杠（修复 favicon 组与 head 中 RSS 订阅链接）
+1. `astro.config.mjs`：`site` 与 `base` 输出补尾斜杠；缺 `GITHUB_REPOSITORY_OWNER` 时
+   从 `GITHUB_REPOSITORY` 推导 owner（修复 favicon 组与 head 中 RSS 订阅链接）
 2. `src/pages/rss.xml.js`：RSS 条目链接加 base 前缀
 3. `src/utils/blog-heatmap.ts`：热力图「最新文章」与日期格子链接加 base 前缀
 4. `src/components/cards/ProfileCard.astro`：头像路径按 base 解析
-5. `patches/@navfolio%2Ftheme-default@github%3Anavfolio%2Ftheme-default#0be2d98.patch`：
+5. `public/browserconfig.xml`、`public/manifest.json`：图标路径改为相对路径（与部署子路径解耦）；
+   删除未引用的 `public/site.webmanifest`
+6. `patches/@navfolio%2Ftheme-default@github%3Anavfolio%2Ftheme-default#0be2d98.patch`：
    修复依赖包内硬编码的 sitemap 链接（bun patch，锁定 commit，`bun install` 时自动应用）
 
 验证方式：构建产物扫描 `dist` 内全部 `href` / `src` / 绝对 URL，断言均带 `/DoubleX/` 前缀（0 泄漏）。
@@ -138,7 +141,7 @@ GitHub Pages 项目页从子路径提供服务。主题自带的 base 处理存�
 
 本次实现写入的占位内容：
 
-- 2 个示例项目（含封面、标签、外链）
+- 2 个示例项目（标签、外链；封面随真实项目补充）
 - 2 篇示例博客
 - 关于页、首页引语/介绍/Doing、联系信息
 - 占位头像与 favicon（中性图形，不含主题品牌元素）
