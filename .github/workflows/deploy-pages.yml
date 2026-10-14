@@ -1,9 +1,8 @@
-name: Deploy Astro to GitHub Pages
+name: Deploy to GitHub Pages
 
 on:
   push:
-    branches:
-      - v1
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -20,12 +19,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v7
-        with:
-          submodules: recursive
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v7
+        uses: actions/setup-node@v4
         with:
           node-version: 22
 
@@ -33,51 +30,31 @@ jobs:
         uses: oven-sh/setup-bun@v2
 
       - name: Install font subsetting tools
-        run: python -m pip install --user fonttools brotli
+        run: |
+          python3 -m venv .venv
+          .venv/bin/pip install --upgrade pip fonttools brotli
 
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
-      - name: Ensure docs submodule is available
-        run: git submodule update --init --recursive --remote
-
-      - name: Sync friend circle
-        if: ${{ vars.NAVFOLIO_FRIEND_CIRCLE_ENABLED == 'true' && vars.NAVFOLIO_FRIEND_LINKS_SRC != '' }}
-        uses: navfolio/friend-circle-sync@main
-        with:
-          input: ${{ vars.NAVFOLIO_FRIEND_LINKS_SRC }}
-          output: public/friend-circle.json
-          max-posts-per-feed: '12'
-          name-field: name
-          url-field: url
-          avatar-field: avatar
-          rss-field: rss
-
       - name: Build site
-        env:
-          NAVFOLIO_CONTENT_SOURCE: docs
-          SITE_URL: https://astro.navfolio.site
-          SITE_BASE: /
-          NAVFOLIO_COMMENTS_ENABLED: ${{ vars.NAVFOLIO_COMMENTS_ENABLED }}
-          NAVFOLIO_COMMENTS_PROVIDER: ${{ vars.NAVFOLIO_COMMENTS_PROVIDER }}
-          NAVFOLIO_GISCUS_REPO: ${{ vars.NAVFOLIO_GISCUS_REPO }}
-          NAVFOLIO_GISCUS_REPO_ID: ${{ vars.NAVFOLIO_GISCUS_REPO_ID }}
-          NAVFOLIO_GISCUS_CATEGORY: ${{ vars.NAVFOLIO_GISCUS_CATEGORY }}
-          NAVFOLIO_GISCUS_CATEGORY_ID: ${{ vars.NAVFOLIO_GISCUS_CATEGORY_ID }}
-        run: bun run docs:build
+        run: bun run build
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v5
+      - name: Check base paths
+        run: bun run check:base
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
 
   deploy:
-    runs-on: ubuntu-latest
     needs: build
+    runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v5
+        uses: actions/deploy-pages@v4
