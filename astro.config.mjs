@@ -38,10 +38,13 @@ const normalizeSiteUrl = (value) => {
   return /^[a-z][a-z\d+.-]*:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`;
 };
 
+const withTrailingSlash = (value) => (value.endsWith('/') ? value : `${value}/`);
+
 const isGitHubActions = process.env.GITHUB_ACTIONS === 'true';
 const customSite = process.env.SITE_URL;
 const customBase = process.env.SITE_BASE;
-const repositoryOwner = process.env.GITHUB_REPOSITORY_OWNER;
+const repositoryOwner =
+  process.env.GITHUB_REPOSITORY_OWNER ?? process.env.GITHUB_REPOSITORY?.split('/')[0];
 const repositoryName = process.env.GITHUB_REPOSITORY?.split('/')[1];
 const isProjectPage =
   Boolean(repositoryOwner) &&
@@ -50,17 +53,19 @@ const isProjectPage =
 
 const githubPagesSite =
   repositoryOwner && repositoryName
-    ? `https://${repositoryOwner}.github.io${isProjectPage ? `/${repositoryName}` : ''}`
+    ? `https://${repositoryOwner}.github.io${isProjectPage ? `/${repositoryName}/` : '/'}`
     : undefined;
 
-const resolvedSite =
+const resolvedSite = withTrailingSlash(
   normalizeSiteUrl(customSite) ||
-  (isGitHubActions && githubPagesSite ? githubPagesSite : undefined) ||
-  normalizeSiteUrl(configuredSiteUrl) ||
-  'https://example.com';
+    (isGitHubActions && githubPagesSite ? githubPagesSite : undefined) ||
+    normalizeSiteUrl(configuredSiteUrl) ||
+    'https://example.com',
+);
 
-const resolvedBase =
-  customBase || (isGitHubActions && isProjectPage && repositoryName ? `/${repositoryName}` : '/');
+const resolvedBase = withTrailingSlash(
+  customBase || (isGitHubActions && isProjectPage && repositoryName ? `/${repositoryName}` : '/'),
+);
 
 // https://astro.build/config
 export default defineConfig({

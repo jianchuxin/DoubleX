@@ -6,6 +6,7 @@ import { sortByDateDesc } from '../utils/content-dates';
 export async function GET(context) {
   const { site } = await getSiteConfig();
   const posts = sortByDateDesc(await getCollection('blog', ({ data }) => !data.draft));
+  const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
   return rss({
     title: site.title,
@@ -22,7 +23,7 @@ export async function GET(context) {
           ...(post.data.series ?? []),
         ]),
       ],
-      link: `/blog/${post.id}/`,
+      link: `${base}/blog/${post.id}/`,
     })),
   });
 }

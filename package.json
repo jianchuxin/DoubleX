@@ -9,6 +9,7 @@
     "dev": "astro dev",
     "fonts:ui": "bun scripts/fonts/subset-ui-font.ts",
     "build": "bun run fonts:ui && astro build && pagefind --site dist --output-subdir pagefind --root-selector main --exclude-selectors \"[data-pagefind-ignore]\"",
+    "check:base": "node scripts/check-base-paths.mjs /DoubleX https://jianchuxin.github.io/DoubleX",
     "preview": "astro preview",
     "docs:dev": "NAVFOLIO_CONTENT_SOURCE=docs astro dev",
     "docs:build": "NAVFOLIO_CONTENT_SOURCE=docs bun run build",
@@ -63,5 +64,8 @@
   },
   "lint-staged": {
     "*": "bun run format:check"
+  },
+  "patchedDependencies": {
+    "@navfolio/theme-default@github:navfolio/theme-default#0be2d98": "patches/@navfolio%2Ftheme-default@github%3Anavfolio%2Ftheme-default#0be2d98.patch"
   }
 }

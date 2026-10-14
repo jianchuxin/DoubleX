@@ -11,12 +11,17 @@ interface Profile {
 }
 
 const { profile } = Astro.props as { profile: Profile };
+
+const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
+const avatarSrc = /^https?:\/\//.test(profile.avatar)
+  ? profile.avatar
+  : `${basePath}${profile.avatar.startsWith('/') ? profile.avatar : `/${profile.avatar}`}`;
 ---
 
 <article class="profile-card">
   <div class="avatar-wrap">
     <img
-      src={profile.avatar}
+      src={avatarSrc}
       alt={`${profile.name} GitHub avatar`}
       width="176"
       height="176"
