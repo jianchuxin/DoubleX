@@ -439,6 +439,13 @@ const siteConfig = defineCollection({
           startDate: '',
           dateArchiveBaseHref: '',
         }),
+      featured: z
+        .object({
+          enabled: z.boolean().optional().default(true),
+          count: z.number().int().positive().optional().default(2),
+        })
+        .optional()
+        .default({ enabled: true, count: 2 }),
       navigation: z.array(navigationItemSchema),
       links: z.array(homeLinkSchema).optional().default([]),
       doing: z.array(
