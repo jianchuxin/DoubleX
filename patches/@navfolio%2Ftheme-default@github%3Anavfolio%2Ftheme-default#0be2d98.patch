@@ -1,0 +1,13 @@
+diff --git a/src/components/BaseHead.astro b/src/components/BaseHead.astro
+index 0a8cf252bb7a550afe357b3b4596025081a500dd..a8c7aa443b14b3add14f828b1c8f739361363229 100644
+--- a/src/components/BaseHead.astro
++++ b/src/components/BaseHead.astro
+@@ -185,7 +185,7 @@ html:root{--font-config-en:${enFamily};--font-config-code:${codeFamily};--font-c
+ <link rel="apple-touch-icon" sizes="180x180" href={assetPath('apple-touch-icon.png')} />
+ <link rel="manifest" href={assetPath('manifest.json')} />
+ <meta name="theme-color" content="#fdfdf9" />
+-<link rel="sitemap" href="/sitemap-index.xml" />
++<link rel="sitemap" href={assetPath('sitemap-index.xml')} />
+ <link
+   rel="alternate"
+   type="application/rss+xml"

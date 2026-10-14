@@ -1,0 +1,185 @@
+[config.site]
+title = "DoubleX"
+description = "简楚欣的个人网站：作品集与博客。"
+pageTitle = "DoubleX | 个人网站"
+pageDescription = "前端开发者的个人空间：作品、笔记与正在做的事。"
+url = "https://jianchuxin.github.io/DoubleX"
+repository = "https://github.com/jianchuxin/DoubleX"
+footerNote = "基于 navfolio 主题构建 · Astro + GitHub Pages"
+
+[config.theme]
+# 可用色盘：
+# green-soft, green-vivid, rose-soft, pink-soft, purple-soft, blue-soft, orange-soft, brown-soft
+palette = "green-soft"
+# 原生 UI 语言。可用值：en、zh-CN、zh-TW。
+lang = "zh-CN"
+
+[config.fonts]
+# 英文与代码感 UI 字体
+en = "Maple Mono"
+code = "Monaco"
+# 模板内可直接选择：ChillRoundM、LXGW WenKai
+zh = "ChillRoundM"
+file = "/fonts/ChillRoundM.ttf"
+
+[config.code]
+lightTheme = "catppuccin-latte"
+darkTheme = "catppuccin-macchiato"
+lineNumbers = true
+wrap = true
+preserveIndent = true
+collapseStyle = "collapsible-auto"
+
+[config.math]
+render = "katex" # "katex" | "mathjax"
+
+[config.comments]
+enabled = false
+provider = "none"
+show_on_posts = true
+
+[config.search]
+enabled = true
+shortcut = "mod+k"
+placeholder = "搜索笔记…"
+maxResults = 6
+
+[config.pages.blog]
+title = "博客"
+kicker = "随笔与笔记"
+subtitle = "记录学习、构建与踩坑。"
+note = "长文、教程与项目笔记，按时间与主题整理。"
+postsPerPage = 6
+# date-fns 使用的日期格式模板。
+dateFormat = "yyyy-MM-dd"
+# 元信息分隔符。可以使用 "|"、"/" 等符号，也可以使用特殊值 "icon"。
+metadataSeparator = "icon"
+# 文章列表封面样式："card" 保留带边框的缩略图，"mask" 会将图片融合到右侧。
+coverImageStyle = "mask"
+
+[config.pages.blog.categories]
+title = "分类"
+kicker = "按主题浏览"
+subtitle = ""
+note = "从文章 frontmatter 聚合出的主题索引。"
+
+[config.pages.blog.series]
+title = "系列"
+kicker = "阅读路径"
+subtitle = ""
+note = "可以按顺序连续阅读的相关文章。"
+
+[config.pages.projects]
+title = "项目"
+kicker = "作品架"
+subtitle = "做过的东西与正在做的事。"
+note = "每个项目是一份简报：为什么做、解决了什么、后续怎么走。"
+
+[config.profile]
+name = "简楚欣"
+handle = "@jianchuxin"
+role = "前端开发者"
+email = "hi@example.com"
+website = "https://jianchuxin.github.io/DoubleX/"
+github = "https://github.com/jianchuxin"
+avatar = "/images/avatar.svg"
+
+[[config.topNav.links]]
+label = "首页"
+href = "/"
+
+[[config.topNav.links]]
+label = "博客"
+href = "/blog"
+
+[[config.topNav.links]]
+label = "项目"
+module = "projects"
+
+[[config.topNav.links]]
+label = "关于"
+href = "/about"
+
+[config.home]
+
+[config.home.featured]
+enabled = true
+count = 2
+
+[config.home.quote]
+text = [
+  "把想法做出来，",
+  "把做过的事讲清楚，",
+  "让作品自己说话。",
+]
+
+[config.home.intro]
+title = "这里是 DoubleX"
+name = "DoubleX"
+body = [
+  "我是一名前端开发者，喜欢把想法做成真正能用的东西。",
+  "DoubleX 是我的个人空间：放作品、写笔记，也记录正在做的事。",
+  "内容会持续更新，欢迎常来看看。",
+]
+
+[config.home.latest]
+count = 1
+heatmapWeeks = 24
+showHeatmapLatest = true
+excludeDraft = true
+startDate = ""
+dateArchiveBaseHref = ""
+
+[[config.home.navigation]]
+icon = "compass"
+title = "项目"
+subtitle = "作品与项目简报"
+href = "/projects"
+
+[[config.home.navigation]]
+icon = "pen"
+title = "博客"
+subtitle = "文章、笔记与教程"
+href = "/blog"
+
+[[config.home.navigation]]
+icon = "briefcase"
+title = "关于"
+subtitle = "我是谁、在做什么"
+href = "/about"
+
+[[config.home.navigation]]
+icon = "github"
+title = "GitHub"
+subtitle = "代码、实验和工具"
+href = "https://github.com/jianchuxin"
+
+[[config.home.links]]
+label = "GitHub"
+icon = "github"
+tooltip = "https://github.com/jianchuxin"
+copy = false
+
+[[config.home.links]]
+label = "Email"
+icon = "mail"
+tooltip = "hi@example.com"
+copy = true
+
+[[config.home.links]]
+label = "RSS"
+icon = "rss"
+tooltip = "/rss.xml"
+copy = false
+
+[[config.home.doing]]
+text = "搭建 DoubleX 个人网站"
+mark = "01"
+
+[[config.home.doing]]
+text = "整理作品与项目笔记"
+mark = "02"
+
+[[config.home.doing]]
+text = "学习 Astro 与静态站点工程"
+mark = "03"

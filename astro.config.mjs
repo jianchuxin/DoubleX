@@ -1,17 +1,90 @@
 // @ts-check
+
+import fs from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import mdx from '@astrojs/mdx';
+import sitemap from '@astrojs/sitemap';
 import { defineConfig } from 'astro/config';
+import { parse } from 'smol-toml';
+
 import tailwindcss from '@tailwindcss/vite';
 
-const [owner, repo] = (process.env.GITHUB_REPOSITORY ?? '').split('/');
-const isUserPage = typeof repo === 'string' && repo.endsWith('.github.io');
+import navfolioConfig from './navfolio.config';
+import { getAstroPluginConfig } from './src/plugins/config';
+
+/**
+ * @param {unknown} value
+ * @returns {value is Record<string, unknown>}
+ */
+const isRecord = (value) => typeof value === 'object' && value !== null && !Array.isArray(value);
+
+const siteToml = parse(fs.readFileSync(new URL('./src/config/site.toml', import.meta.url), 'utf8'));
+const configToml = isRecord(siteToml.config) ? siteToml.config : {};
+const siteConfig = isRecord(configToml.site) ? configToml.site : {};
+const mathConfig = isRecord(configToml.math) ? configToml.math : {};
+const configuredSiteUrl = siteConfig.url;
+const configuredMathRenderer = mathConfig.render;
+const mathRenderer = configuredMathRenderer === 'mathjax' ? 'mathjax' : 'katex';
+const astroPluginConfig = getAstroPluginConfig(navfolioConfig, { mathRenderer });
+/**
+ * @param {unknown} value
+ */
+const normalizeSiteUrl = (value) => {
+  if (typeof value !== 'string') return undefined;
+
+  const trimmed = value.trim();
+  if (!trimmed) return undefined;
+
+  return /^[a-z][a-z\d+.-]*:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`;
+};
+
+const withTrailingSlash = (value) => (value.endsWith('/') ? value : `${value}/`);
+
+const isGitHubActions = process.env.GITHUB_ACTIONS === 'true';
+const customSite = process.env.SITE_URL;
+const customBase = process.env.SITE_BASE;
+const repositoryOwner =
+  process.env.GITHUB_REPOSITORY_OWNER ?? process.env.GITHUB_REPOSITORY?.split('/')[0];
+const repositoryName = process.env.GITHUB_REPOSITORY?.split('/')[1];
+const isProjectPage =
+  Boolean(repositoryOwner) &&
+  Boolean(repositoryName) &&
+  repositoryName !== `${repositoryOwner}.github.io`;
+
+const githubPagesSite =
+  repositoryOwner && repositoryName
+    ? `https://${repositoryOwner}.github.io${isProjectPage ? `/${repositoryName}/` : '/'}`
+    : undefined;
+
+const resolvedSite = withTrailingSlash(
+  normalizeSiteUrl(customSite) ||
+    (isGitHubActions && githubPagesSite ? githubPagesSite : undefined) ||
+    normalizeSiteUrl(configuredSiteUrl) ||
+    'https://example.com',
+);
+
+const resolvedBase = withTrailingSlash(
+  customBase || (isGitHubActions && isProjectPage && repositoryName ? `/${repositoryName}` : '/'),
+);
 
 // https://astro.build/config
 export default defineConfig({
-  // Derived from CI so GitHub Pages URLs are correct without hardcoding.
-  site: owner ? `https://${owner}.github.io` : undefined,
-  // Project pages live under /<repo>/; user pages and local dev use /.
-  base: isUserPage ? '/' : repo ? `/${repo}` : '/',
+  site: resolvedSite,
+  base: resolvedBase,
+  markdown: {
+    remarkPlugins: astroPluginConfig.remarkPlugins,
+    rehypePlugins: astroPluginConfig.rehypePlugins,
+  },
+  integrations: [...astroPluginConfig.integrations, mdx(), sitemap()],
+
   vite: {
     plugins: [tailwindcss()],
+    resolve: {
+      alias: {
+        'virtual:navfolio/page-runtime': fileURLToPath(
+          new URL('./src/modules/page-runtime.ts', import.meta.url),
+        ),
+      },
+    },
   },
 });

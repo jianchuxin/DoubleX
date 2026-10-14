@@ -56,13 +56,13 @@ export https_proxy=http://127.0.0.1:7897 http_proxy=http://127.0.0.1:7897 all_pr
 
 **Files:** 仓库根目录全部文件（替换）
 
-- [ ] Step 1: 建分支
+- [x] Step 1: 建分支
 
 ```bash
 git checkout -b feat/navfolio-base
 ```
 
-- [ ] Step 2: 移除旧脚手架文件（走 git，可回滚）
+- [x] Step 2: 移除旧脚手架文件（走 git，可回滚）
 
 ```bash
 git rm -r --quiet .github .nvmrc .gitignore README.md astro.config.mjs package.json package-lock.json public src tsconfig.json
@@ -70,7 +70,7 @@ git rm -r --quiet .github .nvmrc .gitignore README.md astro.config.mjs package.j
 
 Expected: 输出一串 `rm '...'`。
 
-- [ ] Step 3: 解压 navfolio v1 并整树复制（排除演示专用文件）
+- [x] Step 3: 解压 navfolio v1 并整树复制（排除演示专用文件）
 
 ```bash
 unzip -oq ~/Downloads/astro-navfolio-1.zip -d /tmp/navfolio-v1
@@ -86,7 +86,7 @@ rsync -a \
   /tmp/navfolio-v1/astro-navfolio-1/ /Users/jianchuxin/Desktop/Code/DoubleX/
 ```
 
-- [ ] Step 4: 验证复制结果
+- [x] Step 4: 验证复制结果
 
 ```bash
 python3 -c "import json;print(json.load(open('package.json'))['version'])"
@@ -96,14 +96,14 @@ git status --short | head -20
 
 Expected: `0.2.0`；关键文件存在；`git status` 显示旧文件删除（`D`）与新文件（`??`）。
 
-- [ ] Step 5: 提交
+- [x] Step 5: 提交
 
 ```bash
 git add -A
 git commit -m "chore: adopt navfolio v1 as site base"
 ```
 
-- [ ] Step 6: 验证
+- [x] Step 6: 验证
 
 ```bash
 git log --oneline -3
@@ -118,7 +118,7 @@ Expected: 新提交 `chore: adopt navfolio v1 as site base`；跟踪文件数约
 
 **Files:** `.nvmrc`（修改）、`.venv/`（生成、已忽略）、`node_modules/`（重装）
 
-- [ ] Step 1: 编辑 `.nvmrc`，内容改为单行 `22`（本机 nvm 已装 22.22.3）
+- [x] Step 1: 编辑 `.nvmrc`，内容改为单行 `22`（本机 nvm 已装 22.22.3）
 
 ```bash
 printf '22\n' > .nvmrc
@@ -127,7 +127,7 @@ cat .nvmrc
 
 Expected: `22`。
 
-- [ ] Step 2: 建 Python venv 并安装字体子集工具
+- [x] Step 2: 建 Python venv 并安装字体子集工具
 
 ```bash
 python3 -m venv .venv
@@ -137,13 +137,13 @@ python3 -m venv .venv
 
 Expected: `fonttools 4.60.x`。
 
-- [ ] Step 3: 移走旧脚手架依赖（避免新旧依赖混杂）
+- [x] Step 3: 移走旧脚手架依赖（避免新旧依赖混杂）
 
 ```bash
 mv node_modules /tmp/doublex-node_modules-old
 ```
 
-- [ ] Step 4: 安装依赖（husky prepare 会同时安装 git hooks）
+- [x] Step 4: 安装依赖（husky prepare 会同时安装 git hooks）
 
 ```bash
 bun install --frozen-lockfile
@@ -151,7 +151,7 @@ bun install --frozen-lockfile
 
 Expected: `625 packages installed`（±几个），末尾出现 `husky`。
 
-- [ ] Step 5: 基线构建（预期失败：内容为空）
+- [x] Step 5: 基线构建（预期失败：内容为空）
 
 ```bash
 bun run build
@@ -159,7 +159,7 @@ bun run build
 
 Expected: 失败，报 `Missing src/content/about.mdx content entry.`。这是预期结果，Task 3 会补内容。
 
-- [ ] Step 6: 确认没有意外产物进入 git
+- [x] Step 6: 确认没有意外产物进入 git
 
 ```bash
 git status --short
@@ -167,7 +167,7 @@ git status --short
 
 Expected: 仅 `.nvmrc` 一处修改。
 
-- [ ] Step 7: 提交
+- [x] Step 7: 提交
 
 ```bash
 git add .nvmrc
@@ -189,7 +189,7 @@ git commit -m "chore: pin node version line to 22"
 - Create: `src/content/projects/doublex-site.md`
 - Create: `src/content/projects/sample-project.md`
 
-- [ ] Step 1: 创建 6 个内容文件（完整内容如下）
+- [x] Step 1: 创建 6 个内容文件（完整内容如下）
 
 `src/content/about.mdx`：
 
@@ -327,7 +327,7 @@ tags: ['示例']
 这是占位内容。之后把这个文件替换成真实项目，或者直接删掉。
 ```
 
-- [ ] Step 2: 构建（预期成功）
+- [x] Step 2: 构建（预期成功）
 
 ```bash
 bun run build
@@ -335,7 +335,7 @@ bun run build
 
 Expected: 成功；Pagefind 输出 `Indexed N pages`。
 
-- [ ] Step 3: 格式检查（husky 会跑同样的检查）
+- [x] Step 3: 格式检查（husky 会跑同样的检查）
 
 ```bash
 bun run format:check
@@ -343,7 +343,7 @@ bun run format:check
 
 Expected: 通过；若失败执行 `bun run format` 后重跑。
 
-- [ ] Step 4: 提交
+- [x] Step 4: 提交
 
 ```bash
 git add src/content
@@ -364,7 +364,7 @@ git commit -m "content: add placeholder posts, projects and about page"
 - Modify: `src/components/cards/ProfileCard.astro`
 - Modify: `package.json`
 
-- [ ] Step 1: 创建 `scripts/check-base-paths.mjs`（完整内容）
+- [x] Step 1: 创建 `scripts/check-base-paths.mjs`（完整内容）
 
 ```js
 #!/usr/bin/env node
@@ -421,7 +421,7 @@ if (problems.length > 0) {
 console.log(`OK: dist 内链接全部带 ${base} 前缀（site: ${site}）`);
 ```
 
-- [ ] Step 2: 构建并运行检查（预期失败：列出所有泄漏）
+- [x] Step 2: 构建并运行检查（预期失败：列出所有泄漏）
 
 ```bash
 export GITHUB_ACTIONS=true GITHUB_REPOSITORY=jianchuxin/DoubleX GITHUB_REPOSITORY_OWNER=jianchuxin
@@ -439,7 +439,7 @@ dist/index.html: /images/logo-thin.webp
 dist/index.html: https://jianchuxin.github.io/rss.xml
 ```
 
-- [ ] Step 3: 修复 `astro.config.mjs`（三处）
+- [x] Step 3: 修复 `astro.config.mjs`（三处）
 
 在 `normalizeSiteUrl` 之后新增帮助函数：
 
@@ -467,17 +467,16 @@ const resolvedSite = withTrailingSlash(
 );
 
 const resolvedBase = withTrailingSlash(
-  customBase ||
-    (isGitHubActions && isProjectPage && repositoryName ? `/${repositoryName}` : '/'),
+  customBase || (isGitHubActions && isProjectPage && repositoryName ? `/${repositoryName}` : '/'),
 );
 ```
 
-- [ ] Step 4: 修复 `src/pages/rss.xml.js`（两处）
+- [x] Step 4: 修复 `src/pages/rss.xml.js`（两处）
 
 在 `const posts = ...` 之后新增：
 
 ```js
-  const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ```
 
 条目里的链接改为：
@@ -486,7 +485,7 @@ const resolvedBase = withTrailingSlash(
       link: `${base}/blog/${post.id}/`,
 ```
 
-- [ ] Step 5: 修复 `src/utils/blog-heatmap.ts`（三处）
+- [x] Step 5: 修复 `src/utils/blog-heatmap.ts`（三处）
 
 在 import 之后新增模块级常量：
 
@@ -500,7 +499,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       href: `${base}/blog/${post.id}/`,
 ```
 
-- [ ] Step 6: 修复 `src/components/cards/ProfileCard.astro`（两处）
+- [x] Step 6: 修复 `src/components/cards/ProfileCard.astro`（两处）
 
 在 `const { profile } = ...` 之后新增：
 
@@ -513,7 +512,7 @@ const avatarSrc = /^https?:\/\//.test(profile.avatar)
 
 `<img>` 的 `src={profile.avatar}` 改为 `src={avatarSrc}`。
 
-- [ ] Step 7: 创建依赖补丁并注册（修复 sitemap 链接）
+- [x] Step 7: 创建依赖补丁并注册（修复 sitemap 链接）
 
 新建 `patches/@navfolio%2Ftheme-default@github%3Anavfolio%2Ftheme-default#0be2d98.patch`，内容：
 
@@ -555,13 +554,13 @@ rg -n "sitemap-index" node_modules/@navfolio/theme-default/src/components/BaseHe
 
 Expected: 输出 `href={assetPath('sitemap-index.xml')}`。
 
-- [ ] Step 8: 在 `package.json` 的 `scripts` 中加入检查命令
+- [x] Step 8: 在 `package.json` 的 `scripts` 中加入检查命令
 
 ```json
     "check:base": "node scripts/check-base-paths.mjs /DoubleX https://jianchuxin.github.io/DoubleX",
 ```
 
-- [ ] Step 9: 重新构建并检查（预期通过）
+- [x] Step 9: 重新构建并检查（预期通过）
 
 ```bash
 bun run build
@@ -570,7 +569,7 @@ bun run check:base
 
 Expected: `OK: dist 内链接全部带 /DoubleX 前缀（site: https://jianchuxin.github.io/DoubleX）`。
 
-- [ ] Step 10: 提交（包含 `bun.lock` 的补丁登记）
+- [x] Step 10: 提交（包含 `bun.lock` 的补丁登记）
 
 ```bash
 git add -A
