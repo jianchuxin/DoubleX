@@ -1,11 +1,11 @@
 # build output
 dist/
-
 # generated types
 .astro/
 
 # dependencies
 node_modules/
+.venv/
 
 # logs
 npm-debug.log*
@@ -13,9 +13,20 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
+
 # environment variables
 .env
 .env.production
 
-# macOS
+# macOS-specific files
 .DS_Store
+
+# jetbrains setting folder
+.idea/
+
+AGENTS.md
+
+# generated font files
+scripts/fonts/ui-chars.txt
+public/fonts/*-subset.woff2
+public/friend-circle.json
